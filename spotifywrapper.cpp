@@ -73,3 +73,8 @@ void SpotifyWrapper::setVolume(int volume_percent)
         }
     });
 }
+
+//void SpotifyWrapper::getInfo()
+//{
+
+//}

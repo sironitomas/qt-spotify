@@ -10,8 +10,6 @@ class SpotifyWrapper : public QObject
     Q_OBJECT
 public:
     explicit SpotifyWrapper(QObject *parent = nullptr);
-
-public slots:
     void grant();
     void skip(bool);
     void playPause();

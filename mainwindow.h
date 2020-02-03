@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <spotifywrapper.h>
+#include "spotifywrapper.h"
+#include "iftttconnector.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,6 +29,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     SpotifyWrapper spotifyWrapper;
+    IftttConnector *ifttt;
     void authenticated();
 };
 #endif // MAINWINDOW_H
