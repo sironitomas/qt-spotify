@@ -1,0 +1,2 @@
+# qt-spotify
+Personal project
