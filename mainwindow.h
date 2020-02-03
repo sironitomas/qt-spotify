@@ -23,7 +23,7 @@ private slots:
 
     void on_playPauseButton_clicked();
 
-    void on_horizontalSlider_sliderReleased();
+    void on_volumeSlider_sliderReleased();
 
 private:
     Ui::MainWindow *ui;

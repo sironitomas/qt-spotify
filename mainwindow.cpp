@@ -40,8 +40,7 @@ void MainWindow::on_playPauseButton_clicked()
     spotifyWrapper.playPause();
 }
 
-void MainWindow::on_horizontalSlider_sliderReleased()
+void MainWindow::on_volumeSlider_sliderReleased()
 {
-    qDebug() << this->ui->horizontalSlider->value();
-    spotifyWrapper.setVolume(this->ui->horizontalSlider->value());
+    spotifyWrapper.setVolume(this->ui->volumeSlider->value());
 }

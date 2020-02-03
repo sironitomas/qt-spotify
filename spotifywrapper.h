@@ -11,14 +11,11 @@ class SpotifyWrapper : public QObject
 public:
     explicit SpotifyWrapper(QObject *parent = nullptr);
 
-    bool isPermanent() const;
-    void setPermanent(bool value);
-
 public slots:
     void grant();
-    void skip(bool next);
+    void skip(bool);
     void playPause();
-    void setVolume(int percentage);
+    void setVolume(int);
 
 signals:
     void authenticated();

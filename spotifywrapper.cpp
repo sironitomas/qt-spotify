@@ -5,7 +5,6 @@
 
 SpotifyWrapper::SpotifyWrapper(QObject *parent) : QObject(parent)
 {
-//    bool authorized = false;
     auto replyHandler = new QOAuthHttpServerReplyHandler(1337, this);
     oauth2.setReplyHandler(replyHandler);
     oauth2.setAuthorizationUrl(QUrl("https://accounts.spotify.com/authorize"));
@@ -21,23 +20,11 @@ SpotifyWrapper::SpotifyWrapper(QObject *parent) : QObject(parent)
     });
     connect(&oauth2, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
             &QDesktopServices::openUrl);
-//    connect(&oauth2, &QOAuth2AuthorizationCodeFlow::granted,
-//            this, &SpotifyWrapper::granted);
 }
 
 void SpotifyWrapper::grant()
 {
     oauth2.grant();
-}
-
-void SpotifyWrapper::setPermanent(bool value)
-{
-    permanent = value;
-}
-
-bool SpotifyWrapper::isPermanent() const
-{
-    return permanent;
 }
 
 void SpotifyWrapper::skip(bool next)
