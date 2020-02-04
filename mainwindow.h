@@ -20,8 +20,10 @@ public:
 private slots:
     void on_nextButton_clicked();
     void on_previousButton_clicked();
-    void on_playPauseButton_clicked();
+    void on_playButton_clicked();
     void on_volumeSlider_sliderReleased();
+    void on_pauseButton_clicked();
+    void timerFinished();
 
 private:
     Ui::MainWindow *ui;

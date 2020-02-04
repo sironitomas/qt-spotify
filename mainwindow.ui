@@ -28,14 +28,21 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="2">
-     <widget class="QPushButton" name="nextButton">
+    <item row="3" column="0" colspan="4">
+     <widget class="QLabel" name="artistLabel">
       <property name="text">
-       <string>Next Song</string>
+       <string>TextLabel</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="0" colspan="3">
+    <item row="5" column="2">
+     <widget class="QPushButton" name="playButton">
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0" colspan="4">
      <widget class="QSlider" name="volumeSlider">
       <property name="maximum">
        <number>100</number>
@@ -48,31 +55,31 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="1">
-     <widget class="QPushButton" name="playPauseButton">
+    <item row="5" column="3">
+     <widget class="QPushButton" name="nextButton">
       <property name="text">
-       <string>Play/Pause</string>
+       <string>Next Song</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="3">
+    <item row="1" column="0" colspan="4">
      <widget class="QLabel" name="songLabel">
       <property name="text">
        <string>TextLabel</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0" colspan="3">
+    <item row="2" column="0" colspan="4">
      <widget class="QLabel" name="albumLabel">
       <property name="text">
        <string>TextLabel</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="0" colspan="3">
-     <widget class="QLabel" name="artistLabel">
+    <item row="5" column="1">
+     <widget class="QPushButton" name="pauseButton">
       <property name="text">
-       <string>TextLabel</string>
+       <string>Pause</string>
       </property>
      </widget>
     </item>

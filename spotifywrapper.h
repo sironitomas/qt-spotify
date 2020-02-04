@@ -12,7 +12,8 @@ public:
     explicit SpotifyWrapper(QObject *parent = nullptr);
     void grant();
     void skip(bool);
-    void playPause();
+    void play();
+    void pause();
     void setVolume(int);
     void fillUpdatedInfo();
     QStringList getSongInfo();
@@ -29,6 +30,7 @@ private:
     QString albumName;
     QString songName;
     int volumePercent;
+    bool volumeMutex;
 };
 
 #endif // SPOTIFYWRAPPER_H

@@ -26,6 +26,10 @@ void MainWindow::authenticated()
     // Window will only be seen if user authenticated
     this->show();
     spotifyWrapper.fillUpdatedInfo();
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainWindow::timerFinished);
+    timer->start(1000);
 }
 
 void MainWindow::showInfo()
@@ -49,17 +53,26 @@ void MainWindow::on_nextButton_clicked()
 void MainWindow::on_previousButton_clicked()
 {
     spotifyWrapper.skip(false);
-    spotifyWrapper.fillUpdatedInfo();
 }
 
-void MainWindow::on_playPauseButton_clicked()
+void MainWindow::on_playButton_clicked()
 {
-    spotifyWrapper.playPause();
-//    spotifyWrapper.fillUpdatedInfo();
+    spotifyWrapper.play();
+}
+
+void MainWindow::on_pauseButton_clicked()
+{
+    spotifyWrapper.pause();
 }
 
 void MainWindow::on_volumeSlider_sliderReleased()
 {
     spotifyWrapper.setVolume(this->ui->volumeSlider->value());
-
 }
+
+void MainWindow::timerFinished()
+{
+    spotifyWrapper.fillUpdatedInfo();
+}
+
+

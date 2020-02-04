@@ -45,9 +45,21 @@ void SpotifyWrapper::skip(bool next)
     });
 }
 
-void SpotifyWrapper::playPause()
+void SpotifyWrapper::play()
 {
     QNetworkReply *reply = oauth2.put(QUrl("https://api.spotify.com/v1/me/player/play"));
+    connect(reply, &QNetworkReply::finished, [=]() {
+        reply->deleteLater();
+        if (reply->error() != QNetworkReply::NoError) {
+            qCritical() << reply->errorString();
+            return;
+        }
+    });
+}
+
+void SpotifyWrapper::pause()
+{
+    QNetworkReply *reply = oauth2.put(QUrl("https://api.spotify.com/v1/me/player/pause"));
     connect(reply, &QNetworkReply::finished, [=]() {
         reply->deleteLater();
         if (reply->error() != QNetworkReply::NoError) {
