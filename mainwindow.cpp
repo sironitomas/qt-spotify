@@ -25,14 +25,18 @@ void MainWindow::authenticated()
 {
     // Window will only be seen if user authenticated
     this->show();
+    spotifyWrapper.fillUpdatedInfo();
 }
 
 void MainWindow::showInfo()
 {
-    QStringList info = spotifyWrapper.getInfo();
+    QStringList info = spotifyWrapper.getSongInfo();
     ui->artistLabel->setText(info.value(0));
     ui->albumLabel->setText(info.value(1));
     ui->songLabel->setText(info.value(2));
+
+    int volume_percent = spotifyWrapper.getVolumeInfo();
+    ui->volumeSlider->setValue(volume_percent);
 }
 
 void MainWindow::on_nextButton_clicked()

@@ -15,7 +15,8 @@ public:
     void playPause();
     void setVolume(int);
     void fillUpdatedInfo();
-    QStringList getInfo();
+    QStringList getSongInfo();
+    int getVolumeInfo();
 
 signals:
     void authenticated();
@@ -27,6 +28,7 @@ private:
     QString artistName;
     QString albumName;
     QString songName;
+    int volumePercent;
 };
 
 #endif // SPOTIFYWRAPPER_H

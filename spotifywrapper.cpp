@@ -88,6 +88,11 @@ void SpotifyWrapper::fillUpdatedInfo()
             const auto document = QJsonDocument::fromJson(json);
             Q_ASSERT(document.isObject());
             const auto rootObject = document.object();
+
+            const auto deviceValue = rootObject.value("device");
+            const auto deviceObject = deviceValue.toObject();
+            volumePercent = deviceObject.value("volume_percent").toInt();
+
             const auto itemValue = rootObject.value("item");
             Q_ASSERT(itemValue.isObject());
             const auto itemObject = itemValue.toObject();
@@ -108,12 +113,17 @@ void SpotifyWrapper::fillUpdatedInfo()
     });
 }
 
-QStringList SpotifyWrapper::getInfo() {
+QStringList SpotifyWrapper::getSongInfo() {
     QStringList info;
+
     info.append(artistName);
     info.append(albumName);
     info.append(songName);
 
     return info;
+}
+
+int SpotifyWrapper::getVolumeInfo() {
+    return volumePercent;
 }
 
