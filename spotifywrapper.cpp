@@ -9,7 +9,7 @@ SpotifyWrapper::SpotifyWrapper(QObject *parent) : QObject(parent)
     oauth2.setReplyHandler(replyHandler);
     oauth2.setAuthorizationUrl(QUrl("https://accounts.spotify.com/authorize"));
     oauth2.setAccessTokenUrl(QUrl("https://accounts.spotify.com/api/token"));
-    oauth2.setScope("user-modify-playback-state user-read-currently-playing");
+    oauth2.setScope("user-modify-playback-state user-read-playback-state user-read-currently-playing");
     oauth2.setClientIdentifier("a3b6f6ac59d44ef3904b72b8f2be25ac");
     oauth2.setClientIdentifierSharedKey("5860c015326b43db812feb041b31f453");
 
@@ -59,12 +59,12 @@ void SpotifyWrapper::playPause()
 
 void SpotifyWrapper::setVolume(int volume_percent)
 {
-    QVariantMap params;
-    QVariant percent(volume_percent);
-    params.insert(QString("volume_percent"), percent);
+//    QVariantMap params;
+//    QVariant percent(volume_percent);
+//    params.insert(QString("volume_percent"), percent);
     QString endpoint = "https://api.spotify.com/v1/me/player/volume/?volume_percent="
                        + QString::number(volume_percent);
-    QNetworkReply *reply = oauth2.put(QUrl(endpoint), params);
+    QNetworkReply *reply = oauth2.put(QUrl(endpoint));
     connect(reply, &QNetworkReply::finished, [=]() {
         reply->deleteLater();
         if (reply->error() != QNetworkReply::NoError) {
@@ -74,7 +74,46 @@ void SpotifyWrapper::setVolume(int volume_percent)
     });
 }
 
-//void SpotifyWrapper::getInfo()
-//{
+void SpotifyWrapper::fillUpdatedInfo()
+{
+    QNetworkReply *reply = oauth2.get(QUrl("https://api.spotify.com/v1/me/player?market=AR"));
+    connect(reply, &QNetworkReply::finished, [=]() {
+        reply->deleteLater();
+        if (reply->error() != QNetworkReply::NoError) {
+            qCritical() << reply->errorString();
+            return;
+        }
+        else {
+            const auto json = reply->readAll();
+            const auto document = QJsonDocument::fromJson(json);
+            Q_ASSERT(document.isObject());
+            const auto rootObject = document.object();
+            const auto itemValue = rootObject.value("item");
+            Q_ASSERT(itemValue.isObject());
+            const auto itemObject = itemValue.toObject();
+            songName = itemObject.value("name").toString();
 
-//}
+            const auto albumValue = itemObject.value("album");
+            const auto albumObject = albumValue.toObject();
+            albumName = albumObject.value("name").toString();
+
+            const auto artistsValue = itemObject.value("artists");
+            const auto artistsArray = artistsValue.toArray();
+            const auto mainArtistValue = artistsArray.first();
+            const auto mainArtistObject = mainArtistValue.toObject();
+            artistName = mainArtistObject.value("name").toString();
+
+            emit updatedInfo();
+        }
+    });
+}
+
+QStringList SpotifyWrapper::getInfo() {
+    QStringList info;
+    info.append(artistName);
+    info.append(albumName);
+    info.append(songName);
+
+    return info;
+}
+

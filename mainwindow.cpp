@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     spotifyWrapper.grant();
     connect(&spotifyWrapper, &SpotifyWrapper::authenticated,
             this, &MainWindow::authenticated);
+    connect(&spotifyWrapper, &SpotifyWrapper::updatedInfo,
+            this, &MainWindow::showInfo);
     ifttt = new IftttConnector("d_HNRJwe0GdzNiVEJJyWCE");
 }
 
@@ -25,20 +27,31 @@ void MainWindow::authenticated()
     this->show();
 }
 
+void MainWindow::showInfo()
+{
+    QStringList info = spotifyWrapper.getInfo();
+    ui->artistLabel->setText(info.value(0));
+    ui->albumLabel->setText(info.value(1));
+    ui->songLabel->setText(info.value(2));
+}
+
 void MainWindow::on_nextButton_clicked()
 {
     spotifyWrapper.skip(true);
-    ifttt->eventGet("rock");
+    spotifyWrapper.fillUpdatedInfo();
+//    ifttt->eventGet("rock");
 }
 
 void MainWindow::on_previousButton_clicked()
 {
     spotifyWrapper.skip(false);
+    spotifyWrapper.fillUpdatedInfo();
 }
 
 void MainWindow::on_playPauseButton_clicked()
 {
     spotifyWrapper.playPause();
+//    spotifyWrapper.fillUpdatedInfo();
 }
 
 void MainWindow::on_volumeSlider_sliderReleased()

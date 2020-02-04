@@ -19,11 +19,8 @@ public:
 
 private slots:
     void on_nextButton_clicked();
-
     void on_previousButton_clicked();
-
     void on_playPauseButton_clicked();
-
     void on_volumeSlider_sliderReleased();
 
 private:
@@ -31,5 +28,6 @@ private:
     SpotifyWrapper spotifyWrapper;
     IftttConnector *ifttt;
     void authenticated();
+    void showInfo();
 };
 #endif // MAINWINDOW_H

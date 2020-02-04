@@ -14,14 +14,19 @@ public:
     void skip(bool);
     void playPause();
     void setVolume(int);
+    void fillUpdatedInfo();
+    QStringList getInfo();
 
 signals:
     void authenticated();
+    void updatedInfo();
 
 private:
     QOAuth2AuthorizationCodeFlow oauth2;
     bool permanent = false;
-
+    QString artistName;
+    QString albumName;
+    QString songName;
 };
 
 #endif // SPOTIFYWRAPPER_H
