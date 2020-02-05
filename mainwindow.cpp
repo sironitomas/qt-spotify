@@ -87,8 +87,6 @@ void MainWindow::showInfo()
         ui->previousButton->setEnabled(false);
     }
     this->adjustSize();
-    this->setFixedWidth(this->width());
-    this->setFixedHeight(this->height());
 }
 
 void MainWindow::on_nextButton_clicked()
