@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ignoreVolumeUpdate = false;
 
     spotifyWrapper.grant();
     connect(&spotifyWrapper, &SpotifyWrapper::authenticated,
@@ -50,6 +51,9 @@ void MainWindow::showInfo()
     {
         ui->volumeSlider->setValue(volume_percent);
         this->setWindowTitle("QtSpotify - Volume: " + QString::number(volume_percent) + "%");
+    }
+    else {
+        ignoreVolumeUpdate = false;
     }
 
     bool isPlaying = spotifyWrapper.getIsPlaying();

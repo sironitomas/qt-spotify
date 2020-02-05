@@ -133,6 +133,9 @@
     </item>
     <item row="1" column="4" rowspan="6">
      <widget class="QSlider" name="volumeSlider">
+      <property name="maximum">
+       <number>100</number>
+      </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
