@@ -34,6 +34,7 @@ private:
     void authenticated();
     void showInfo();
     bool ignoreVolumeUpdate;
+    void setNewScene();
 
 };
 #endif // MAINWINDOW_H

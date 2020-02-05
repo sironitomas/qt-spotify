@@ -40,10 +40,17 @@ void MainWindow::authenticated()
 
 void MainWindow::showInfo()
 {
+    QString oldArtistName = ui->artistLabel->text();
+
     QStringList info = spotifyWrapper.getSongInfo();
     ui->artistLabel->setText(info.value(0));
     ui->albumLabel->setText(info.value(1));
     ui->songLabel->setText(info.value(2));
+    this->adjustSize();
+
+    if (info.value(0) != oldArtistName) {
+        this->setNewScene();
+    }
 
     if (spotifyWrapper.getDeviceName() == "-")
         ui->deviceLabel->setText("No active devices to control");
@@ -86,14 +93,16 @@ void MainWindow::showInfo()
         ui->nextButton->setEnabled(false);
         ui->previousButton->setEnabled(false);
     }
-    this->adjustSize();
+}
+
+void MainWindow::setNewScene()
+{
+    ifttt->eventGet("random_colors");
 }
 
 void MainWindow::on_nextButton_clicked()
 {
     spotifyWrapper.skip(true);
-    spotifyWrapper.fillUpdatedInfo();
-//    ifttt->eventGet("rock");
 }
 
 void MainWindow::on_previousButton_clicked()
