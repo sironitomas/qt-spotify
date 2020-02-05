@@ -128,6 +128,11 @@ void SpotifyWrapper::fillUpdatedInfo()
             const auto albumObject = albumValue.toObject();
             albumName = albumObject.value("name").toString();
 
+            QUrl tempArtUri = QUrl(albumObject.value("images").toArray().at(1).toObject().value("url").toString());
+            if (tempArtUri != artUri) {
+                artUri = tempArtUri;
+                newArt = true;
+            }
             const auto artistsValue = itemObject.value("artists");
             const auto artistsArray = artistsValue.toArray();
             const auto mainArtistValue = artistsArray.first();
@@ -166,4 +171,22 @@ bool SpotifyWrapper::getIsPlaying() {
 
 bool SpotifyWrapper::getIsActive() {
     return isActive;
+}
+
+QImage SpotifyWrapper::getArt()
+{
+    if (newArt) {
+        QNetworkReply *reply = oauth2.get(artUri);
+        connect(reply, &QNetworkReply::finished, [=]() {
+            reply->deleteLater();
+            if (reply->error() != QNetworkReply::NoError) {
+                qCritical() << reply->errorString();
+            }
+            else {
+                art.loadFromData(reply->readAll());
+                newArt = false;
+            }
+        });
+    }
+    return art;
 }

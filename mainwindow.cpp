@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "spotifywrapper.h"
+#include "albumartcontainer.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::showInfo);
 
     ifttt = new IftttConnector("oMWyNaxm1S3VLs4OI4aqQ");
+    aac = new AlbumArtContainer();
 }
 
 MainWindow::~MainWindow()
@@ -62,6 +64,8 @@ void MainWindow::showInfo()
     }
 
     if (spotifyWrapper.getIsActive()) {
+        aac->setImage(spotifyWrapper.getArt());
+        aac->show();
         if (spotifyWrapper.getIsPlaying()) {
             ui->playButton->setEnabled(false);
             ui->pauseButton->setEnabled(true);
@@ -75,12 +79,14 @@ void MainWindow::showInfo()
         ui->previousButton->setEnabled(true);
     }
     else {
+        aac->hide();
         ui->volumeSlider->setEnabled(false);
         ui->playButton->setEnabled(false);
         ui->pauseButton->setEnabled(false);
         ui->nextButton->setEnabled(false);
         ui->previousButton->setEnabled(false);
     }
+    this->adjustSize();
 }
 
 void MainWindow::on_nextButton_clicked()
@@ -118,5 +124,6 @@ void MainWindow::timerFinished()
 {
     spotifyWrapper.fillUpdatedInfo();
 }
+
 
 

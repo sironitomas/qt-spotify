@@ -4,6 +4,7 @@
 #include <QOAuth2AuthorizationCodeFlow>
 #include <QtNetwork>
 #include <QObject>
+#include <QImage>
 
 class SpotifyWrapper : public QObject
 {
@@ -22,6 +23,7 @@ public:
     int getCompletionInfo();
     bool getIsPlaying();
     bool getIsActive();
+    QImage getArt();
 
 signals:
     void authenticated();
@@ -37,7 +39,10 @@ private:
     int volumePercent;
     bool isPlaying;
     bool isActive;
+    bool newArt;
     int completion;
+    QUrl artUri;
+    QImage art;
 };
 
 #endif // SPOTIFYWRAPPER_H

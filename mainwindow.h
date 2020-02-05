@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "spotifywrapper.h"
 #include "iftttconnector.h"
+#include "albumartcontainer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,8 +30,10 @@ private:
     Ui::MainWindow *ui;
     SpotifyWrapper spotifyWrapper;
     IftttConnector *ifttt;
+    AlbumArtContainer *aac;
     void authenticated();
     void showInfo();
     bool ignoreVolumeUpdate;
+
 };
 #endif // MAINWINDOW_H
