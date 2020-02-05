@@ -17,6 +17,7 @@ public:
     void setVolume(int);
     void fillUpdatedInfo();
     QStringList getSongInfo();
+    QString getDeviceName();
     int getVolumeInfo();
     int getCompletionInfo();
     bool getIsPlaying();
@@ -31,6 +32,7 @@ private:
     QString artistName;
     QString albumName;
     QString songName;
+    QString deviceName;
     int volumePercent;
     bool isPlaying;
     int completion;

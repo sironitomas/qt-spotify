@@ -43,6 +43,11 @@ void MainWindow::showInfo()
     ui->albumLabel->setText(info.value(1));
     ui->songLabel->setText(info.value(2));
 
+    if (spotifyWrapper.getDeviceName() == "-")
+        ui->deviceLabel->setText("No active devices to control");
+    else
+        ui->deviceLabel->setText("Controlling device: " + spotifyWrapper.getDeviceName());
+
     int completion = spotifyWrapper.getCompletionInfo();
     ui->progressBar->setValue(completion);
 
@@ -60,10 +65,12 @@ void MainWindow::showInfo()
     if (isPlaying) {
         ui->playButton->setEnabled(false);
         ui->pauseButton->setEnabled(true);
+        ui->volumeSlider->setEnabled(true);
     }
     else {
         ui->playButton->setEnabled(true);
         ui->pauseButton->setEnabled(false);
+        ui->volumeSlider->setEnabled(false);
     }
 }
 

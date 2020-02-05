@@ -94,7 +94,19 @@ void SpotifyWrapper::fillUpdatedInfo()
         else {
             const auto json = reply->readAll();
             const auto document = QJsonDocument::fromJson(json);
-            Q_ASSERT(document.isObject());
+
+            if (!document.isObject()) {
+                completion = 0;
+                volumePercent = 0;
+                artistName = "-";
+                albumName = "-";
+                songName = "-";
+                deviceName = "-";
+                isPlaying = false;
+                emit updatedInfo();
+                return;
+            }
+
             const auto rootObject = document.object();
 
             isPlaying = rootObject.value("is_playing").toBool();
@@ -103,7 +115,7 @@ void SpotifyWrapper::fillUpdatedInfo()
             const auto deviceValue = rootObject.value("device");
             const auto deviceObject = deviceValue.toObject();
             volumePercent = deviceObject.value("volume_percent").toInt();
-
+            deviceName = deviceObject.value("name").toString();
 
             const auto itemValue = rootObject.value("item");
             const auto itemObject = itemValue.toObject();
@@ -132,6 +144,10 @@ QStringList SpotifyWrapper::getSongInfo() {
     info.append(albumName);
     info.append(songName);
     return info;
+}
+
+QString SpotifyWrapper::getDeviceName() {
+    return deviceName;
 }
 
 int SpotifyWrapper::getVolumeInfo() {
