@@ -42,9 +42,15 @@ void MainWindow::showInfo()
     ui->albumLabel->setText(info.value(1));
     ui->songLabel->setText(info.value(2));
 
+    int completion = spotifyWrapper.getCompletionInfo();
+    ui->progressBar->setValue(completion);
+
     int volume_percent = spotifyWrapper.getVolumeInfo();
     if (!ignoreVolumeUpdate)
+    {
         ui->volumeSlider->setValue(volume_percent);
+        this->setWindowTitle("QtSpotify - Volume: " + QString::number(volume_percent) + "%");
+    }
 
     bool isPlaying = spotifyWrapper.getIsPlaying();
     if (isPlaying) {
@@ -81,7 +87,9 @@ void MainWindow::on_pauseButton_clicked()
 
 void MainWindow::on_volumeSlider_sliderReleased()
 {
-    spotifyWrapper.setVolume(this->ui->volumeSlider->value());
+    int value = this->ui->volumeSlider->value();
+    spotifyWrapper.setVolume(value);
+    this->setWindowTitle("QtSpotify - Volume: " + QString::number(value) + "%");
     ignoreVolumeUpdate = true;
 }
 

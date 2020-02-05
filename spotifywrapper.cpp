@@ -98,13 +98,16 @@ void SpotifyWrapper::fillUpdatedInfo()
             const auto rootObject = document.object();
 
             isPlaying = rootObject.value("is_playing").toBool();
+            double progress = rootObject.value("progress_ms").toDouble();
 
             const auto deviceValue = rootObject.value("device");
             const auto deviceObject = deviceValue.toObject();
             volumePercent = deviceObject.value("volume_percent").toInt();
 
+
             const auto itemValue = rootObject.value("item");
             const auto itemObject = itemValue.toObject();
+            double duration = itemObject.value("duration_ms").toDouble();
             songName = itemObject.value("name").toString();
 
             const auto albumValue = itemObject.value("album");
@@ -117,6 +120,7 @@ void SpotifyWrapper::fillUpdatedInfo()
             const auto mainArtistObject = mainArtistValue.toObject();
             artistName = mainArtistObject.value("name").toString();
 
+            completion = (int)((progress/duration)*1000);
             emit updatedInfo();
         }
     });
@@ -132,6 +136,10 @@ QStringList SpotifyWrapper::getSongInfo() {
 
 int SpotifyWrapper::getVolumeInfo() {
     return volumePercent;
+}
+
+int SpotifyWrapper::getCompletionInfo() {
+    return completion;
 }
 
 bool SpotifyWrapper::getIsPlaying() {

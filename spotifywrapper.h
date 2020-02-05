@@ -18,6 +18,7 @@ public:
     void fillUpdatedInfo();
     QStringList getSongInfo();
     int getVolumeInfo();
+    int getCompletionInfo();
     bool getIsPlaying();
 
 signals:
@@ -32,6 +33,7 @@ private:
     QString songName;
     int volumePercent;
     bool isPlaying;
+    int completion;
 };
 
 #endif // SPOTIFYWRAPPER_H
