@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&spotifyWrapper, &SpotifyWrapper::updatedInfo,
             this, &MainWindow::showInfo);
 
-    ifttt = new IftttConnector("d_HNRJwe0GdzNiVEJJyWCE");
+    ifttt = new IftttConnector("oMWyNaxm1S3VLs4OI4aqQ");
 }
 
 MainWindow::~MainWindow()
@@ -61,16 +61,25 @@ void MainWindow::showInfo()
         ignoreVolumeUpdate = false;
     }
 
-    bool isPlaying = spotifyWrapper.getIsPlaying();
-    if (isPlaying) {
-        ui->playButton->setEnabled(false);
-        ui->pauseButton->setEnabled(true);
+    if (spotifyWrapper.getIsActive()) {
+        if (spotifyWrapper.getIsPlaying()) {
+            ui->playButton->setEnabled(false);
+            ui->pauseButton->setEnabled(true);
+        }
+        else {
+            ui->playButton->setEnabled(true);
+            ui->pauseButton->setEnabled(false);
+        }
         ui->volumeSlider->setEnabled(true);
+        ui->nextButton->setEnabled(true);
+        ui->previousButton->setEnabled(true);
     }
     else {
-        ui->playButton->setEnabled(true);
-        ui->pauseButton->setEnabled(false);
         ui->volumeSlider->setEnabled(false);
+        ui->playButton->setEnabled(false);
+        ui->pauseButton->setEnabled(false);
+        ui->nextButton->setEnabled(false);
+        ui->previousButton->setEnabled(false);
     }
 }
 
@@ -101,6 +110,7 @@ void MainWindow::on_volumeSlider_sliderReleased()
     int value = this->ui->volumeSlider->value();
     spotifyWrapper.setVolume(value);
     this->setWindowTitle("QtSpotify - Volume: " + QString::number(value) + "%");
+    // Workaround to avoid strange volume slider behaviour
     ignoreVolumeUpdate = true;
 }
 

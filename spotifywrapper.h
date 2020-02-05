@@ -21,6 +21,7 @@ public:
     int getVolumeInfo();
     int getCompletionInfo();
     bool getIsPlaying();
+    bool getIsActive();
 
 signals:
     void authenticated();
@@ -35,6 +36,7 @@ private:
     QString deviceName;
     int volumePercent;
     bool isPlaying;
+    bool isActive;
     int completion;
 };
 

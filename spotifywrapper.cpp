@@ -103,10 +103,12 @@ void SpotifyWrapper::fillUpdatedInfo()
                 songName = "-";
                 deviceName = "-";
                 isPlaying = false;
+                isActive = false;
                 emit updatedInfo();
                 return;
             }
 
+            isActive = true;
             const auto rootObject = document.object();
 
             isPlaying = rootObject.value("is_playing").toBool();
@@ -162,3 +164,6 @@ bool SpotifyWrapper::getIsPlaying() {
     return isPlaying;
 }
 
+bool SpotifyWrapper::getIsActive() {
+    return isActive;
+}
