@@ -18,6 +18,8 @@ public:
     void fillUpdatedInfo();
     QStringList getSongInfo();
     int getVolumeInfo();
+    bool getVolumeLock();
+    bool getIsPlaying();
 
 signals:
     void authenticated();
@@ -30,7 +32,8 @@ private:
     QString albumName;
     QString songName;
     int volumePercent;
-    bool volumeMutex;
+    bool volumeLock;
+    bool isPlaying;
 };
 
 #endif // SPOTIFYWRAPPER_H

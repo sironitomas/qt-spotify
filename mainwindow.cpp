@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::authenticated);
     connect(&spotifyWrapper, &SpotifyWrapper::updatedInfo,
             this, &MainWindow::showInfo);
+
     ifttt = new IftttConnector("d_HNRJwe0GdzNiVEJJyWCE");
 }
 
@@ -27,6 +28,7 @@ void MainWindow::authenticated()
     this->show();
     spotifyWrapper.fillUpdatedInfo();
 
+    // Timer is used to keep currently playing information updated
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::timerFinished);
     timer->start(1000);
@@ -40,7 +42,20 @@ void MainWindow::showInfo()
     ui->songLabel->setText(info.value(2));
 
     int volume_percent = spotifyWrapper.getVolumeInfo();
-    ui->volumeSlider->setValue(volume_percent);
+    if (spotifyWrapper.getVolumeLock())
+    {
+        ui->volumeSlider->setValue(volume_percent);
+    }
+
+    bool isPlaying = spotifyWrapper.getIsPlaying();
+    if (isPlaying) {
+        ui->playButton->setEnabled(false);
+        ui->pauseButton->setEnabled(true);
+    }
+    else {
+        ui->playButton->setEnabled(true);
+        ui->pauseButton->setEnabled(false);
+    }
 }
 
 void MainWindow::on_nextButton_clicked()

@@ -34,7 +34,6 @@ void SpotifyWrapper::skip(bool next)
         skip = "next";
     else
         skip = "previous";
-
     QNetworkReply *reply = oauth2.post(QUrl("https://api.spotify.com/v1/me/player/" + skip));
     connect(reply, &QNetworkReply::finished, [=]() {
         reply->deleteLater();
@@ -71,9 +70,6 @@ void SpotifyWrapper::pause()
 
 void SpotifyWrapper::setVolume(int volume_percent)
 {
-//    QVariantMap params;
-//    QVariant percent(volume_percent);
-//    params.insert(QString("volume_percent"), percent);
     QString endpoint = "https://api.spotify.com/v1/me/player/volume/?volume_percent="
                        + QString::number(volume_percent);
     QNetworkReply *reply = oauth2.put(QUrl(endpoint));
@@ -88,8 +84,10 @@ void SpotifyWrapper::setVolume(int volume_percent)
 
 void SpotifyWrapper::fillUpdatedInfo()
 {
+    volumeLock = false;
     QNetworkReply *reply = oauth2.get(QUrl("https://api.spotify.com/v1/me/player?market=AR"));
     connect(reply, &QNetworkReply::finished, [=]() {
+        volumeLock = true;
         reply->deleteLater();
         if (reply->error() != QNetworkReply::NoError) {
             qCritical() << reply->errorString();
@@ -101,12 +99,13 @@ void SpotifyWrapper::fillUpdatedInfo()
             Q_ASSERT(document.isObject());
             const auto rootObject = document.object();
 
+            isPlaying = rootObject.value("is_playing").toBool();
+
             const auto deviceValue = rootObject.value("device");
             const auto deviceObject = deviceValue.toObject();
             volumePercent = deviceObject.value("volume_percent").toInt();
 
             const auto itemValue = rootObject.value("item");
-            Q_ASSERT(itemValue.isObject());
             const auto itemObject = itemValue.toObject();
             songName = itemObject.value("name").toString();
 
@@ -127,15 +126,21 @@ void SpotifyWrapper::fillUpdatedInfo()
 
 QStringList SpotifyWrapper::getSongInfo() {
     QStringList info;
-
     info.append(artistName);
     info.append(albumName);
     info.append(songName);
-
     return info;
 }
 
 int SpotifyWrapper::getVolumeInfo() {
     return volumePercent;
+}
+
+bool SpotifyWrapper::getVolumeLock() {
+    return volumeLock;
+}
+
+bool SpotifyWrapper::getIsPlaying() {
+    return isPlaying;
 }
 

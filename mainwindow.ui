@@ -30,6 +30,13 @@
     </item>
     <item row="3" column="0" colspan="4">
      <widget class="QLabel" name="artistLabel">
+      <property name="font">
+       <font>
+        <family>Victor Mono</family>
+        <pointsize>18</pointsize>
+        <italic>false</italic>
+       </font>
+      </property>
       <property name="text">
        <string>TextLabel</string>
       </property>
@@ -64,6 +71,13 @@
     </item>
     <item row="1" column="0" colspan="4">
      <widget class="QLabel" name="songLabel">
+      <property name="font">
+       <font>
+        <family>Victor Mono</family>
+        <pointsize>18</pointsize>
+        <italic>false</italic>
+       </font>
+      </property>
       <property name="text">
        <string>TextLabel</string>
       </property>
@@ -71,6 +85,13 @@
     </item>
     <item row="2" column="0" colspan="4">
      <widget class="QLabel" name="albumLabel">
+      <property name="font">
+       <font>
+        <family>Victor Mono</family>
+        <pointsize>18</pointsize>
+        <italic>false</italic>
+       </font>
+      </property>
       <property name="text">
        <string>TextLabel</string>
       </property>
@@ -85,24 +106,6 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>600</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuQuit">
-    <property name="title">
-     <string>Menu</string>
-    </property>
-    <addaction name="actionExit"/>
-   </widget>
-   <addaction name="menuQuit"/>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
