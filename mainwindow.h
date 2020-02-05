@@ -31,5 +31,6 @@ private:
     IftttConnector *ifttt;
     void authenticated();
     void showInfo();
+    bool ignoreVolumeUpdate;
 };
 #endif // MAINWINDOW_H

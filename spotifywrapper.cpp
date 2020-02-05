@@ -84,10 +84,8 @@ void SpotifyWrapper::setVolume(int volume_percent)
 
 void SpotifyWrapper::fillUpdatedInfo()
 {
-    volumeLock = false;
     QNetworkReply *reply = oauth2.get(QUrl("https://api.spotify.com/v1/me/player?market=AR"));
     connect(reply, &QNetworkReply::finished, [=]() {
-        volumeLock = true;
         reply->deleteLater();
         if (reply->error() != QNetworkReply::NoError) {
             qCritical() << reply->errorString();
@@ -134,10 +132,6 @@ QStringList SpotifyWrapper::getSongInfo() {
 
 int SpotifyWrapper::getVolumeInfo() {
     return volumePercent;
-}
-
-bool SpotifyWrapper::getVolumeLock() {
-    return volumeLock;
 }
 
 bool SpotifyWrapper::getIsPlaying() {

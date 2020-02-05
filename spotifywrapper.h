@@ -18,7 +18,6 @@ public:
     void fillUpdatedInfo();
     QStringList getSongInfo();
     int getVolumeInfo();
-    bool getVolumeLock();
     bool getIsPlaying();
 
 signals:
@@ -32,7 +31,6 @@ private:
     QString albumName;
     QString songName;
     int volumePercent;
-    bool volumeLock;
     bool isPlaying;
 };
 

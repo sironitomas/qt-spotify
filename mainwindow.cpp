@@ -32,6 +32,7 @@ void MainWindow::authenticated()
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::timerFinished);
     timer->start(1000);
+    ignoreVolumeUpdate = false;
 }
 
 void MainWindow::showInfo()
@@ -42,10 +43,8 @@ void MainWindow::showInfo()
     ui->songLabel->setText(info.value(2));
 
     int volume_percent = spotifyWrapper.getVolumeInfo();
-    if (spotifyWrapper.getVolumeLock())
-    {
+    if (!ignoreVolumeUpdate)
         ui->volumeSlider->setValue(volume_percent);
-    }
 
     bool isPlaying = spotifyWrapper.getIsPlaying();
     if (isPlaying) {
@@ -83,6 +82,7 @@ void MainWindow::on_pauseButton_clicked()
 void MainWindow::on_volumeSlider_sliderReleased()
 {
     spotifyWrapper.setVolume(this->ui->volumeSlider->value());
+    ignoreVolumeUpdate = true;
 }
 
 void MainWindow::timerFinished()
