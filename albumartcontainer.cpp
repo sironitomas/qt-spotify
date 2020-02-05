@@ -9,9 +9,12 @@ AlbumArtContainer::AlbumArtContainer(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void AlbumArtContainer::setImage(QImage art)
+void AlbumArtContainer::setImage(QImage art, QString name)
 {
     albumArt = art;
+    this->setFixedWidth(albumArt.width());
+    this->setFixedHeight(albumArt.height());
+    this->setWindowTitle(name);
     this->update();
 }
 
@@ -23,6 +26,5 @@ AlbumArtContainer::~AlbumArtContainer()
 void AlbumArtContainer::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    this->adjustSize();
     painter.drawImage(QPoint(0,0), albumArt);
 }

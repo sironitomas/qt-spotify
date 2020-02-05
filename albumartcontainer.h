@@ -13,7 +13,7 @@ class AlbumArtContainer : public QWidget
 
 public:
     explicit AlbumArtContainer(QWidget *parent = nullptr);
-    void setImage(QImage);
+    void setImage(QImage, QString);
     ~AlbumArtContainer();
 
 

@@ -64,7 +64,7 @@ void MainWindow::showInfo()
     }
 
     if (spotifyWrapper.getIsActive()) {
-        aac->setImage(spotifyWrapper.getArt());
+        aac->setImage(spotifyWrapper.getArt(), info.value(1));
         aac->show();
         if (spotifyWrapper.getIsPlaying()) {
             ui->playButton->setEnabled(false);
